@@ -17,6 +17,7 @@ class EchoForm(Form):
 
 class SquawkForm(Form):
     Status = StringField(u'Squawk', widget=TextArea())
+    startMonth = SelectField(u'Start Month', choices=MONTHS)
     submit_button = SubmitField('Submit Form')
 
     def validate_hidden_field(form, field):

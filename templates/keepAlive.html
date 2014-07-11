@@ -12,12 +12,13 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="form-group">
   <form method="POST" action="/">
     {{ form.csrf_token }}
     <h3>{{ form.Status.label }}</h3>
-    {{ form.Status(rows=5,cols=30) }}<br>
-    <input type="submit" value="Submit" class="btn pull-left">
+    {{ form.Status(rows=5,cols=30, class="form-group") }}<br>
+    <h2>{{ form.startMonth.label}}</h2> {{ form.startMonth() }}
+    <input type="submit" value="Stay Alive" class="btn pull-left">
   </form>
 </div>
 {% endblock %}
