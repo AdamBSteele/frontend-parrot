@@ -1,7 +1,7 @@
 #frontend-parrot
 ===============
 
-A Flask-based frontend for Parrot to run on
+A Flask-based frontend for [Parrot](https://github.com/AdamBSteele/parrot "Parrot") to run on
 ####End Goals:
 Users can log in with their twitter account to:
 * schedule single tweets to be posted in the future
