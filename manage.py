@@ -2,39 +2,12 @@ from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_appconfig import AppConfig
 from flask_wtf import Form, RecaptchaField
-from wtforms import TextField, HiddenField, ValidationError, RadioField,\
-    BooleanField, SubmitField, IntegerField, FormField, validators
+from wtforms.fields import StringField, SubmitField
+from wtforms.widgets import TextArea
 from wtforms.validators import Required
 
-
-# straight from the wtforms docs:
-class TelephoneForm(Form):
-    country_code = IntegerField('Country Code', [validators.required()])
-    area_code = IntegerField('Area Code/Exchange', [validators.required()])
-    number = TextField('Number')
-
-
-class ExampleForm(Form):
-    field1 = TextField('First Field', description='This is field one.')
-    field2 = TextField('Second Field', description='This is field two.',
-                       validators=[Required()])
-    hidden_field = HiddenField('You cannot see this', description='Nope')
-    recaptcha = RecaptchaField('A sample recaptcha field')
-    radio_field = RadioField('This is a radio field', choices=[
-        ('head_radio', 'Head radio'),
-        ('radio_76fm', "Radio '76 FM"),
-        ('lips_106', 'Lips 106'),
-        ('wctr', 'WCTR'),
-    ])
-    checkbox_field = BooleanField('This is a checkbox',
-                                  description='Checkboxes can be tricky.')
-
-    # subforms
-    mobile_phone = FormField(TelephoneForm)
-
-    # you can change the label as well
-    office_phone = FormField(TelephoneForm, label='Your office phone')
-
+class EchoForm(Form):
+    Status = StringField(u'Text', widget=TextArea())
     submit_button = SubmitField('Submit Form')
 
     def validate_hidden_field(form, field):
@@ -55,11 +28,10 @@ def create_app(configfile=None):
 
     @app.route('/')
     def index():
-        form = ExampleForm()
+        form = EchoForm()
         form.validate_on_submit() #to get error messages to the browser
         return render_template('index.html', form=form)
 
     return app
 
-if __name__ == '__main__':
-    create_app().run(debug=True)
+create_app().run(debug=True)
