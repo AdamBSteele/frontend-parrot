@@ -1,13 +1,27 @@
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_appconfig import AppConfig
-from flask_wtf import Form, RecaptchaField
+from flask_wtf import Form
 from wtforms.fields import StringField, SubmitField
 from wtforms.widgets import TextArea
 from wtforms.validators import Required
 
 class EchoForm(Form):
-    Status = StringField(u'Text', widget=TextArea())
+    Status = StringField(u'Echo', widget=TextArea())
+    submit_button = SubmitField('Submit Form')
+
+    def validate_hidden_field(form, field):
+        raise ValidationError('Always wrong')
+
+class SquawkForm(Form):
+    Status = StringField(u'Squawk', widget=TextArea())
+    submit_button = SubmitField('Submit Form')
+
+    def validate_hidden_field(form, field):
+        raise ValidationError('Always wrong')
+
+class CampaignForm(Form):
+    Status = StringField(u'Campaign', widget=TextArea())
     submit_button = SubmitField('Submit Form')
 
     def validate_hidden_field(form, field):
@@ -28,9 +42,25 @@ def create_app(configfile=None):
 
     @app.route('/')
     def index():
+        return render_template('index.html')
+
+    @app.route('/timedTweet/')
+    def echo():
         form = EchoForm()
         form.validate_on_submit() #to get error messages to the browser
-        return render_template('index.html', form=form)
+        return render_template('timedTweet.html', form=form)
+
+    @app.route('/keepAlive/')
+    def squawk():
+        form = SquawkForm()
+        form.validate_on_submit() #to get error messages to the browser
+        return render_template('keepAlive.html', form=form)
+
+    @app.route('/campaign/')
+    def campaign():
+        form = CampaignForm()
+        form.validate_on_submit() #to get error messages to the browser
+        return render_template('campaign.html', form=form)
 
     return app
 

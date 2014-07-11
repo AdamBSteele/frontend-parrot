@@ -4,16 +4,22 @@
 
 {% block navbar %}
 <ul class="nav nav-tabs" role="tablist">
-  <li class="active"><a href="/">Home</a></li>
+  <li><a href="/">Home</a></li>
   <li><a href="/timedTweet/">Timed Tweet</a></li>
-  <li><a href="/keepAlive/">Keep-Alive Tweets</a></li>
+  <li class="active"><a href="/keepAlive/">Keep-Alive Tweets</a></li>
   <li><a href="/campaign/">Campaign</a></li>
 </ul>
 {% endblock %}
 
-
 {% block content %}
-<h1> Welcome to ParrotSuite! </h1>
+<div class="container">
+  <form method="POST" action="/">
+    {{ form.csrf_token }}
+    <h3>{{ form.Status.label }}</h3>
+    {{ form.Status(rows=5,cols=30) }}<br>
+    <input type="submit" value="Submit" class="btn pull-left">
+  </form>
+</div>
 {% endblock %}
     
 {% block head %}
