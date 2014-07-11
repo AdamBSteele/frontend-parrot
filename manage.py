@@ -2,10 +2,12 @@ from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_appconfig import AppConfig
 from flask_wtf import Form
-from wtforms.fields import StringField, SubmitField
+from wtforms.fields import StringField, SubmitField, DateField, DateTimeField, SelectField
 from wtforms.widgets import TextArea
 from wtforms.validators import Required
 
+
+MONTHS = [('Jan', 'JANUARY'), ('Feb', 'FEBRUARY'), ('dwt', 'DEALWITHIT.JPG')]
 class EchoForm(Form):
     Status = StringField(u'Echo', widget=TextArea())
     submit_button = SubmitField('Submit Form')
@@ -22,7 +24,12 @@ class SquawkForm(Form):
 
 class CampaignForm(Form):
     Status = StringField(u'Campaign', widget=TextArea())
-    submit_button = SubmitField('Submit Form')
+    startTime = DateField(u'Start Date/Time')
+    endTime = DateTimeField(u'End Date/Time')
+    endMonth = SelectField(u'end month', choices=MONTHS)
+    submit_button = SubmitField('Create Campaign')
+
+
 
     def validate_hidden_field(form, field):
         raise ValidationError('Always wrong')
