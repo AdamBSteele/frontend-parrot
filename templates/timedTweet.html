@@ -4,7 +4,7 @@
 
 {% block navbar %}
 <ul class="nav nav-tabs" role="tablist">
-  <li><a href="/">Home</a></li>
+  <li><a href="#">Home</a></li>
   <li class="active"><a href="/timedTweet/">Timed Tweet</a></li>
   <li><a href="/keepAlive/">Keep-Alive Tweets</a></li>
   <li><a href="/campaign/">Campaign</a></li>
@@ -12,12 +12,16 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="input-group">
   <form method="POST" action="/">
     {{ form.csrf_token }}
     <h3>{{ form.Status.label }}</h3>
     {{ form.Status(rows=5,cols=30) }}<br>
-    <input type="submit" value="Submit" class="btn pull-left">
+    {{ form.lHash() }}{{ form.lHash.label }} <br>
+    
+      {{ form.rHash() }} {{ form.rHash.label }} <br>
+      {{ form.category() }} {{ form.category.label }} <br>
+      <input type="submit" value="Submit" class="btn"> <br>
   </form>
 </div>
 {% endblock %}

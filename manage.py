@@ -1,27 +1,28 @@
+
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_appconfig import AppConfig
 from flask_wtf import Form
-from wtforms.fields import StringField, SubmitField, DateField, DateTimeField, SelectField
+from wtforms.fields import StringField,\
+ SubmitField, DateField, DateTimeField, SelectField, BooleanField
 from wtforms.widgets import TextArea
 from wtforms.validators import Required
 
 
 MONTHS = [('Jan', 'JANUARY'), ('Feb', 'FEBRUARY'), ('dwt', 'DEALWITHIT.JPG')]
+CATEGORIES = [('NONE', 'None'), ('SPORTS', 'Sports'), ('ENTERTAINMENT', 'Entertainment'), ('CATS', 'Cats')]
+
 class EchoForm(Form):
     Status = StringField(u'Echo', widget=TextArea())
+    lHash = BooleanField(u'Append local hash? ')
+    rHash = BooleanField(u'Append global hash?')
+    category = SelectField(u'Hash Category', choices=CATEGORIES)
     submit_button = SubmitField('Submit Form')
-
-    def validate_hidden_field(form, field):
-        raise ValidationError('Always wrong')
 
 class SquawkForm(Form):
     Status = StringField(u'Squawk', widget=TextArea())
     startMonth = SelectField(u'Start Month', choices=MONTHS)
     submit_button = SubmitField('Submit Form')
-
-    def validate_hidden_field(form, field):
-        raise ValidationError('Always wrong')
 
 class CampaignForm(Form):
     Status = StringField(u'Campaign', widget=TextArea())
@@ -30,11 +31,8 @@ class CampaignForm(Form):
     endMonth = SelectField(u'end month', choices=MONTHS)
     submit_button = SubmitField('Create Campaign')
 
-
-
     def validate_hidden_field(form, field):
         raise ValidationError('Always wrong')
-
 
 def create_app(configfile=None):
     app = Flask(__name__)
