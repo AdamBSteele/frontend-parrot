@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from flask_appconfig import AppConfig
 from flask_wtf import Form
@@ -17,6 +17,7 @@ class EchoForm(Form):
     lHash = BooleanField(u'Append local hash? ')
     rHash = BooleanField(u'Append global hash?')
     category = SelectField(u'Hash Category', choices=CATEGORIES)
+    postTime = StringField(u'Date')
     submit_button = SubmitField('Submit Form')
 
 class SquawkForm(Form):
@@ -67,6 +68,23 @@ def create_app(configfile=None):
         form = CampaignForm()
         form.validate_on_submit() #to get error messages to the browser
         return render_template('campaign.html', form=form)
+
+    @app.route('/postTimedTweet/', methods=('GET','POST'))
+    def postTimedTweet():
+        form = EchoForm()
+        if form.validate_on_submit():
+            lHash = form.lHash
+            status = form.Status
+            pass
+
+        #Status = request.form['Status']
+        #lHash = request.form['lHash']
+        #rHash = request.form['gHash']
+        #category = request.form['category']
+        # postTime%a %b %d %H:%M:%S %Y
+        #submit_button = SubmitField('Submit Form')
+        return render_template('index.html')
+
 
     return app
 
